@@ -1,0 +1,10 @@
+body {
+  width: 400px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.invalid {
+  font-size: 14px;
+  color: #f00;
+}
