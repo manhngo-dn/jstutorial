@@ -10,7 +10,7 @@ $("age").addEventListener("change", () => {
 // event: click button send
 $("sendBtn").addEventListener("click", () => {
   // full name input validate
-  const namePattern = /^(\w{1,}\s\w{1,})((\s\w{1,}){1,})?$/;
+  const namePattern = /^([a-zA-z]{1,}\s[a-zA-z]{1,})((\s[a-zA-z]{1,}){1,})?$/;
   let fnameMsg = $("fnameMsg");
   if (
     $("fname").value === "" ||
