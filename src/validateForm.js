@@ -10,8 +10,9 @@ $("age").addEventListener("change", () => {
 // event: click button send
 $("sendBtn").addEventListener("click", () => {
   // full name input validate
-  const namePattern = /^([a-zA-z]{1,}\s[a-zA-z]{1,})((\s[a-zA-z]{1,}){1,})?$/;
+  const namePattern = /^([a-zA-z]+\s[a-zA-z]+)((\s[a-zA-z]+)+)?$/;
   let fnameMsg = $("fnameMsg");
+  const successMsg = `<span class="text-success">Good job!</span>`;
   if (
     $("fname").value === "" ||
     $("fname").value.length < 6 ||
@@ -21,7 +22,7 @@ $("sendBtn").addEventListener("click", () => {
   } else if (!namePattern.test($("fname").value)) {
     fnameMsg.innerHTML = `<span class="text-danger">Your full name is invalid.</spans>`;
   } else {
-    fnameMsg.innerHTML = `<span class="text-success">Good job!</span>`;
+    fnameMsg.innerHTML = successMsg;
   }
 
   // email input validate
@@ -34,7 +35,7 @@ $("sendBtn").addEventListener("click", () => {
   } else if (!emailPattern.test($("email").value)) {
     emailMsg.innerHTML = `<span class="text-danger">We only eccept educational emails.</span>`;
   } else {
-    emailMsg.innerHTML = `<span class="text-success">Good job!</span>`;
+    emailMsg.innerHTML = successMsg;
   }
 
   // age validate
@@ -64,6 +65,16 @@ $("sendBtn").addEventListener("click", () => {
     wishMsg.innerHTML = `<span class="text-danger">This field is required</span>`;
   } else {
     wishMsg.innerHTML = "";
+  }
+
+  // alert when all is validated
+  if (
+    fnameMsg.innerHTML == successMsg &&
+    emailMsg.innerHTML == successMsg &&
+    sportMsg.innerHTML == "" &&
+    wishMsg.innerHTML == ""
+  ) {
+    alert("Sent data! We will contact you as soon as possible.");
   }
 });
 
