@@ -44,13 +44,12 @@ const emailValid = (inputVal, validMsg) => {
   return check;
 };
 
-// validate high input
+// validate high input and rounding number
 const heighValid = (inputVal, validMsg) => {
-  const heighReXPress = /^([0-9]+)(\.([0-9]{0,2}))?$/;
-  let invalidMsg = `<span class="text-danger">Your heigh is required and is kind of x(.xx)`;
+  let invalidMsg = `<span class="text-danger">Your heigh is required</span>`;
   let check = false;
 
-  if (!inputVal.value.length || !heighReXPress.test(inputVal.value)) {
+  if (!inputVal.value.length) {
     validMsg.innerHTML = invalidMsg;
   } else {
     validMsg.innerHTML = "";
@@ -59,12 +58,16 @@ const heighValid = (inputVal, validMsg) => {
   return check;
 };
 
-// validate weight input
+const roundingHeighVal = (inputVal) => {
+  let roundedVal = parseFloat(inputVal.value).toFixed(2);
+  return (inputVal.value = roundedVal);
+};
+
+// validate weight input and rouding number
 const weightValid = (inpuVal, validMsg) => {
-  const weightReXPress = /^([0-9]+)(\.([0-9]{0,1}))?$/;
-  let invalidMsg = `<span class="text-danger">Your weight is required and is kind of xx(.x)`;
+  let invalidMsg = `<span class="text-danger">Your weight is required</span>`;
   let check = false;
-  if (!inpuVal.value.length || !weightReXPress.test(inpuVal.value)) {
+  if (!inpuVal.value.length) {
     validMsg.innerHTML = invalidMsg;
   } else {
     validMsg.innerHTML = "";
@@ -73,7 +76,12 @@ const weightValid = (inpuVal, validMsg) => {
   return check;
 };
 
-// add event for Add button
+const roundingWeightVal = (inputVal) => {
+  let roundedVal = parseFloat(inputVal.value).toFixed(1);
+  return (inputVal.value = roundedVal);
+};
+
+// set event for Add button
 const formValidate = () => {
   if (
     nameValid(nameInput, nameMsg) &&
@@ -82,10 +90,10 @@ const formValidate = () => {
     weightValid(weightInput, weightMsg)
   ) {
     const fullName = $("fullName").value;
-    const age = $("age").value;
+    const age = parseFloat($("age").value);
     const email = $("email").value;
-    const heigh = $("heigh").value;
-    const weight = $("weight").value;
+    const heigh = parseFloat($("heigh").value);
+    const weight = parseFloat($("weight").value);
     const address = $("address").value;
 
     // get value of gender
@@ -95,6 +103,7 @@ const formValidate = () => {
       if (element.checked) {
         gender = element.value;
       }
+      return gender;
     });
 
     // push new detail into database
@@ -108,8 +117,10 @@ const formValidate = () => {
       address
     );
     personsArr.push(newPerson);
+    // const persons = createPersons();
     persons.push(getPersonInfor(newPerson));
 
+    // reset form input
     $("newUser").reset();
 
     // reload table

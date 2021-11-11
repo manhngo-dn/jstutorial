@@ -29,10 +29,10 @@ const createHeader = () => {
 };
 
 // create table body
-const createBody = () => {
+const createBody = (data) => {
   const tbody = document.createElement("tbody");
 
-  persons.forEach((object, index) => {
+  data.forEach((object, index) => {
     const tr = document.createElement("tr");
     tr.setAttribute("id", `row${index + 1}`);
     const fullNameTd = document.createElement("td");
@@ -56,7 +56,9 @@ const createBody = () => {
     const editBtn = createBtn("Edit");
     const deleteBtn = createBtn("Delete");
 
-    deleteBtn.setAttribute("onclick", `deleteRow(${index + 1})`);
+    deleteBtn.setAttribute("onclick", `confirmDelRow(${index + 1})`);
+    deleteBtn.setAttribute("data-bs-toggle", "modal");
+    deleteBtn.setAttribute("data-bs-target", "#confirmToDel");
 
     editBtn.setAttribute("data-bs-toggle", "modal");
     editBtn.setAttribute("data-bs-target", "#modalForm");
@@ -88,10 +90,10 @@ const createBody = () => {
 };
 
 // create table
-const createTable = () => {
+const createTable = (data) => {
   const table = document.createElement("table");
   const tableHeader = createHeader();
-  const tableBody = createBody();
+  const tableBody = createBody(data);
 
   table.append(tableHeader);
   table.append(tableBody);
@@ -105,6 +107,6 @@ const createTable = () => {
 
 // append table to HTML
 const tableSection = $("detailedTable");
-const table = createTable();
+const table = createTable(persons);
 
 tableSection.append(table);

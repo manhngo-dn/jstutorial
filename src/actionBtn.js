@@ -15,7 +15,11 @@ const heighEditMsg = $("heighEditMsg");
 const weightEdit = $("weightEdit");
 const weightEditMsg = $("weightEditMsg");
 
-// set event for delete button
+// set event for delete button and modal of delete
+const confirmDelRow = (index) => {
+  $("confirmedDel").setAttribute("onclick", `deleteRow(${index})`);
+};
+
 const deleteRow = (index) => {
   persons.splice(index - 1, 1);
 
@@ -25,35 +29,25 @@ const deleteRow = (index) => {
   tableSection.append(newTable);
 };
 
-// get value of gender on modal
-const genderRadioEdit = document.getElementsByName("genderEdit");
-let genderEdit = "";
-genderRadioEdit.forEach((element) => {
-  if (element.checked) {
-    genderEdit = element.value;
-  }
-  return genderEdit;
-});
-
 // add event for edit button
 const ageEdit = $("ageEdit");
 const addressEdit = $("addressEdit");
 
 const editRow = (index) => {
+  // reset form edit
+  $("editForm").reset();
+  nameEditMsg.innerHTML = "";
+  emailEditMsg.innerHTML = "";
+  heighEditMsg.innerHTML = "";
+  weightEditMsg.innerHTML = "";
+
   fullNameEdit.value = personsArr[index - 1].fullName;
   ageEdit.value = personsArr[index - 1].age;
   emailEdit.value = personsArr[index - 1].email;
   heighEdit.value = personsArr[index - 1].heigh;
   weightEdit.value = personsArr[index - 1].weight;
-  genderEdit = personsArr[index - 1].gender;
-  addressEdit.value = personsArr[index - 1].address;
 
-  // keep checked for gender on modal
-  genderRadioEdit.forEach((element) => {
-    if (element.value == genderEdit) {
-      element.setAttribute("checked", "");
-    }
-  });
+  addressEdit.value = personsArr[index - 1].address;
 
   // add event for save button
   $("saveChangesBtn").setAttribute("onclick", `saveChanges(${index})`);
@@ -67,6 +61,16 @@ const saveChanges = (index) => {
     heighValid(heighEdit, heighEditMsg) &&
     weightValid(weightEdit, weightEditMsg)
   ) {
+    // get value of gender on modal
+    const genderRadioEdit = document.getElementsByName("genderEdit");
+    let genderEdit = "";
+    genderRadioEdit.forEach((element) => {
+      if (element.checked) {
+        genderEdit = element.value;
+      }
+      return genderEdit;
+    });
+
     delete personsArr[index - 1];
     const editedPerson = new Person(
       fullNameEdit.value,
@@ -81,6 +85,7 @@ const saveChanges = (index) => {
     persons[index - 1] = getPersonInfor(editedPerson);
   }
 
+  // reload table
   $("myTable").remove();
   const newTable = createTable(persons);
   tableSection.append(newTable);
