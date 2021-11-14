@@ -106,7 +106,9 @@ const createTable = (data) => {
 };
 
 // append table to HTML
+let personsArr = createPersonsArr();
+
 const tableSection = $("detailedTable");
-const table = createTable(persons);
+const table = createTable(personsArr);
 
 tableSection.append(table);

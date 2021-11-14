@@ -40,9 +40,7 @@ const Person = function (fullName, age, email, gender, heigh, weight, address) {
 
 // create people's data array
 
-// new way
-
-const personsArr = [];
+const userData = [];
 
 const limit = 10;
 const namesPerson = [
@@ -62,6 +60,7 @@ const emailsPerson = [
 const gendersPerson = ["male", "female", "others"];
 const heighsPerson = [1.58, 1.64, 1.68, 1.73, 1.75, 1.78];
 const weightsPerson = [52.6, 54.5, 57.9, 61.2, 64.6, 67.3];
+const addressPerson = ["a", "b", "c"];
 
 for (let count = 0; count < limit; count++) {
   const newPserson = new Person(
@@ -70,42 +69,25 @@ for (let count = 0; count < limit; count++) {
     emailsPerson[randomInt(0, 2)],
     gendersPerson[randomInt(0, 2)],
     heighsPerson[randomInt(0, 5)],
-    weightsPerson[randomInt(0, 5)]
+    weightsPerson[randomInt(0, 5)],
+    addressPerson[randomInt(0, 2)]
   );
 
-  personsArr.push(newPserson);
+  userData.push(newPserson);
 }
+// up data to local storage
+const storageKey = "userData";
+const storage = window.localStorage.setItem(
+  storageKey,
+  JSON.stringify(userData)
+);
 
-// const createPersons = () => {
-//   let newArr = personsArr;
-//   const persons = newArr.map((obj) => {
-//     obj.BMI = obj.caculateBMI();
-//     obj.healtStt = obj.guessHealth();
+const myData = JSON.parse(localStorage.getItem(storageKey));
+const createPersonsArr = () => {
+  return userData.map((obj) => {
+    obj.BMI = obj.caculateBMI();
+    obj.healthStt = obj.guessHealth();
 
-//     delete obj.heigh;
-//     delete obj.weight;
-//     delete obj.address;
-
-//     return obj;
-//   });
-//   return persons;
-// };
-// const persons = createPersons();
-
-const getPersonInfor = (obj) => {
-  const personInfor = {
-    fullName: obj.fullName,
-    age: obj.age,
-    email: obj.email,
-    gender: obj.gender,
-    BMI: obj.caculateBMI(),
-    healthStt: obj.guessHealth(),
-  };
-  return personInfor;
+    return obj;
+  });
 };
-
-const persons = [];
-
-personsArr.forEach((person) => {
-  persons.push(getPersonInfor(person));
-});

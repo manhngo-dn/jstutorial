@@ -97,16 +97,20 @@ const formValidate = () => {
     const address = $("address").value;
 
     // get value of gender
-    const genderRadio = document.getElementsByName("gender");
-    let gender = "";
-    genderRadio.forEach((element) => {
-      if (element.checked) {
-        gender = element.value;
-      }
+    const getGenderVal = (radioArr) => {
+      let gender = "";
+      radioArr.forEach((element) => {
+        if (element.checked) {
+          gender = element.value;
+        }
+      });
       return gender;
-    });
+    };
 
-    // push new detail into database
+    let genderRadio = document.getElementsByName("gender");
+    const gender = getGenderVal(genderRadio);
+
+    // push new user into database on local storage
     const newPerson = new Person(
       fullName,
       age,
@@ -116,9 +120,17 @@ const formValidate = () => {
       weight,
       address
     );
-    personsArr.push(newPerson);
-    // const persons = createPersons();
-    persons.push(getPersonInfor(newPerson));
+
+    // const userData = JSON.parse(localStorage.getItem(storageKey));
+    userData.push(newPerson);
+    const persons = createPersonsArr();
+
+    console.log(persons);
+    // remove old data
+    localStorage.removeItem(storageKey);
+
+    // up new data base
+    localStorage.setItem(storageKey, JSON.stringify(userData));
 
     // reset form input
     $("newUser").reset();

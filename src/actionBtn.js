@@ -82,11 +82,11 @@ const saveChanges = (index) => {
       addressEdit.value
     );
     personsArr[index - 1] = editedPerson;
-    persons[index - 1] = getPersonInfor(editedPerson);
-  }
+    const newpersons = createPersonsArr();
 
-  // reload table
-  $("myTable").remove();
-  const newTable = createTable(persons);
-  tableSection.append(newTable);
+    // reload table
+    $("myTable").remove();
+    const newTable = createTable(newpersons);
+    tableSection.append(newTable);
+  }
 };

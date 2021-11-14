@@ -1,17 +1,23 @@
 const typeSelect = $("searchType");
 const searchInput = $("searchInput");
 
-const searchedArr = [];
+let searchedArr = [];
 // set event for search button
 const searchFunc = () => {
   let searchValue = searchInput.value;
   let searchedType = typeSelect.value;
 
-  persons.forEach((person) => {
-    if (person[searchedType] === searchValue) {
-      searchedArr.push(person);
-    }
-  });
+  const persons = createPersonsArr();
+
+  if (searchValue == "") {
+    searchedArr = persons;
+  } else {
+    searchedArr = persons.filter((person) => {
+      if (person[searchedType] === searchValue) {
+        return person;
+      }
+    });
+  }
 
   // reload table
   $("myTable").remove();
